@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Green Corridor | IIT Roorkee</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+  <div class="leaf-field" aria-hidden="true">
+    <span>🍃</span><span>🌿</span><span>🍃</span>
+    <span>🌱</span><span>🍃</span><span>🌿</span>
+    <span>🍃</span><span>🌱</span>
+  </div>
+
+  <!-- PAGE 1: INTRODUCTION -->
+  <section class="page hero active" id="page1">
+    <nav class="nav">
+      <div class="brand">🌿 GREEN CORRIDOR</div>
+      <span>IIT ROORKEE · GIS PROJECT</span>
+    </nav>
+
+    <div class="hero-content">
+      <p class="eyebrow">A SUSTAINABLE CAMPUS INITIATIVE</p>
+      <h1>GREEN<br><span>CORRIDOR</span></h1>
+      <p class="group-name">Presented by 3D Minds</p>
+      <p class="hero-description">
+        Mapping a greener future through Land Surface Temperature,
+        road-network analysis, and GIS-based green corridor planning.
+      </p>
+      <button class="primary-btn" onclick="goToPage(2)">
+        Discover the Project <span>→</span>
+      </button>
+      <p class="scroll-note">A greener journey starts here</p>
+    </div>
+
+    <div class="hero-circle circle-one"></div>
+    <div class="hero-circle circle-two"></div>
+  </section>
+
+  <!-- PAGE 2: WHY GREEN CORRIDORS? -->
+  <section class="page information" id="page2">
+    <nav class="nav">
+      <div class="brand">🌿 GREEN CORRIDOR</div>
+      <button class="back-btn" onclick="goToPage(1)">← Home</button>
+    </nav>
+
+    <div class="info-content">
+      <p class="eyebrow">THE NEED FOR A GREENER CAMPUS</p>
+      <h2>Why does IIT Roorkee need<br>
+        <span>a Green Corridor?</span>
+      </h2>
+
+      <p class="info-intro">
+        Green corridors can connect vegetated spaces and provide
+        shade along selected roads and pedestrian routes. Our project
+        uses GIS and remote sensing to identify locations where
+        green infrastructure may be most beneficial.
+      </p>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <span class="feature-icon">🌡️</span>
+          <h3>Understand Heat</h3>
+          <p>Use calculated LST data to investigate hotter areas
+             within the study region.</p>
+        </article>
+
+        <article class="feature">
+          <span class="feature-icon">🌳</span>
+          <h3>Plan Green Routes</h3>
+          <p>Identify potential road sections for vegetation and
+             connected green spaces.</p>
+        </article>
+
+        <article class="feature">
+          <span class="feature-icon">🛰️</span>
+          <h3>GIS-Based Decisions</h3>
+          <p>Combine temperature, road, land-use, and other
+             relevant spatial layers.</p>
+        </article>
+      </div>
+
+      <div class="workflow-strip">
+        <span>LST ANALYSIS</span>
+        <b>→</b>
+        <span>ROAD ANALYSIS</span>
+        <b>→</b>
+        <span>CORRIDOR PLANNING</span>
+      </div>
+
+      <button class="primary-btn" onclick="goToPage(3)">
+        Explore GIS Workspace <span>→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- PAGE 3: GIS WORKSPACE -->
+  <section class="page workspace" id="page3">
+    <nav class="nav">
+      <div class="brand">🌿 GREEN CORRIDOR</div>
+      <button class="back-btn" onclick="goToPage(2)">← Project Overview</button>
+    </nav>
+
+    <div class="workspace-heading">
+      <p class="eyebrow">GEOSPATIAL ANALYSIS STUDIO</p>
+      <h2>Your GIS Work, <span>Visualized.</span></h2>
+      <p>Upload exported QGIS layers to explore your study area.</p>
+    </div>
+
+    <div class="workspace-grid">
+      <aside class="upload-panel">
+        <h3>Map Layers</h3>
+        <p class="muted">Upload GeoJSON files exported from QGIS.</p>
+
+        <label class="upload-box">
+          <span class="upload-icon">🛣️</span>
+          <strong>Road / Study Area</strong>
+          <small>Upload road-area GeoJSON</small>
+          <input type="file" id="roadFile" accept=".geojson,.json">
+        </label>
+
+        <label class="upload-box">
+          <span class="upload-icon">🌡️</span>
+          <strong>LST Layer</strong>
+          <small>Upload LST polygon GeoJSON</small>
+          <input type="file" id="lstFile" accept=".geojson,.json">
+        </label>
+
+        <label class="upload-box">
+          <span class="upload-icon">🌳</span>
+          <strong>Green Corridor</strong>
+          <small>Upload proposed corridor GeoJSON</small>
+          <input type="file" id="corridorFile" accept=".geojson,.json">
+        </label>
+
+        <div id="uploadStatus" role="status" aria-live="polite">
+          Waiting for your GIS layers...
+        </div>
+
+        <button class="reset-btn" onclick="resetMap()">
+          Reset Map Layers
+        </button>
+      </aside>
+
+      <div class="map-panel">
+        <div class="map-topbar">
+          <div>
+            <strong>Interactive Study Map</strong>
+            <small>QGIS layer viewer</small>
+          </div>
+          <span class="live-dot">● MAP READY</span>
+        </div>
+
+        <div id="map"></div>
+
+        <div class="map-legend">
+          <span><i class="legend-dot road"></i> Roads / Boundaries</span>
+          <span><i class="legend-dot heat"></i> LST</span>
+          <span><i class="legend-dot green"></i> Green Corridor</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="workspace-footer">
+      Green Corridor Project · IIT Roorkee · GIS & Remote Sensing
+    </p>
+  </section>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
